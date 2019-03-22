@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'rest_framework',
+    'corsheaders',
     'lastcard',
 ]
 
@@ -135,3 +136,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "127.0.0.1:8000").split(",")
+
+CORS_ORIGIN_ALLOW_ALL = DEBUG
+
+CORS_ALLOW_METHODS = (
+    'GET',
+    'OPTIONS',
+)
+
+CORS_ALLOW_HEADERS = (
+    'Authorization',
+)
