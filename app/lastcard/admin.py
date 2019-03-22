@@ -23,6 +23,9 @@ class CardAdmin(admin.ModelAdmin):
                 card_user.save()
         return super(CardAdmin, self).response_change(request, obj)
 
+    def save_model(self, request, obj, form, change):
+        return super(CardAdmin, self).save_model(request, obj, form, change)
+
 class UserAdmin(admin.ModelAdmin):
     pass
 
