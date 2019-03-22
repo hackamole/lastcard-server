@@ -38,6 +38,12 @@ class User(AbstractUser):
         max_length=255,
         unique=True,
     )
+    username = models.CharField(
+        'username',
+        max_length=150,
+        blank=True,
+        null=True,
+    )
 
     mobile = models.CharField(max_length=31)
     company = models.CharField(max_length=255, null=True, blank=True)
