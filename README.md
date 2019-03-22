@@ -94,7 +94,7 @@ History tracking.
 }
 ```
 
-## POST /api/cards/card-id/users
+## Take over a card
 
-TTake over a card. Done in admin for now.
+Done in admin for now, just change `current_user`.
 
