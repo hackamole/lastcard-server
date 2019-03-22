@@ -22,12 +22,8 @@ Done in admin.
         mobile: string,
         company: string,
         email: email,          # required
-        address: {
-            street: string
-            postcode: string
-            city: string
-            country: string
-        },
+        address: string,
+        country: string,
         birthday: date
         url: url
         social_profile: url
@@ -39,12 +35,8 @@ Done in admin.
         mobile: string,
         company: string,
         email: email,
-        address: {
-            street: string
-            postcode: string
-            city: string
-            country: string
-        },
+        address: string,
+        country: string,
         birthday: date
         url: url
         social_profile: url
@@ -74,12 +66,8 @@ History tracking.
             mobile: string,
             email: email,
             company: string,
-            address: {
-                street: string
-                postcode: string
-                city: string
-                country: string
-            },
+            address: string,
+            country: string,
             birthday: date
             url: url
             social_profile: url

@@ -48,6 +48,8 @@ class User(AbstractUser):
     mobile = models.CharField(max_length=31)
     company = models.CharField(max_length=255, null=True, blank=True)
     role = models.CharField(max_length=255, null=True, blank=True)
+    address = models.TextField(max_length=500, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
     birthday =  models.DateField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     social_profile = models.URLField(blank=True, null=True)

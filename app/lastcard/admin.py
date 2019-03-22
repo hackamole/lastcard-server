@@ -28,7 +28,7 @@ class CardAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
-    fields = ('email', 'password', 'birthday', 'company', 'role', 'mobile', 'url', 'social_profile')
+    fields = ('email', 'password', 'address', 'country', 'birthday', 'company', 'role', 'mobile', 'url', 'social_profile')
     pass
 
 
