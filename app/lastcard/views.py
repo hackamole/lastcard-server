@@ -1,5 +1,6 @@
+from urllib.parse import urljoin
 from django.shortcuts import render
-
+from django.conf import settings
 # Create your views here.
 from rest_framework.response import Response
 from lastcard.models import User, Card, CardUser
@@ -36,6 +37,16 @@ class CardViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
 
+    def list(self, request):
+        cards = Card.objects.all()
+
+        for card in cards:
+            card.qr_code_url = urljoin(settings.DEFAULT_HOST, '/'.join(['qrcodes',str(card.id)]) + '.svg')
+        
+        serializer=CardSerializer(cards, many=True)
+
+        return Response(serializer.data)
+
     @action(detail=True, methods=['get'])
     def history(self, request, pk=None):
         # Get logged in user or just show last
@@ -49,6 +60,7 @@ class CardViewSet(viewsets.ReadOnlyModelViewSet):
 
         serializer = CardSerializer(card)
         card_data = serializer.data
+
         card_data["users"] = UserSerializer(card_users, many=True).data
         return Response(card_data)
 
