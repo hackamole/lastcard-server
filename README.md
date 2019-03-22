@@ -1,3 +1,21 @@
+# Getting started
+
+```
+cd app
+docker-compose up
+```
+
+### Create admin user
+
+```
+docker exec -it app_web_1 bash
+python manage.py createsuperuser
+```
+
+Go to `http://127.0.0.1:8000/admin/`
+
+
+
 # API
 
 ## Generates a card
