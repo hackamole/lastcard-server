@@ -26,8 +26,11 @@ class CardAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         return super(CardAdmin, self).save_model(request, obj, form, change)
 
+
 class UserAdmin(admin.ModelAdmin):
+    fields = ('email', 'password', 'birthday', 'company', 'role', 'mobile', 'url', 'social_profile')
     pass
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Card, CardAdmin)
