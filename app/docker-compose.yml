@@ -7,23 +7,6 @@ services:
     - .:/code
     ports:
     - "8000:8000"
-    depends_on:
-    - db
-    environment:
-    - DB_HOST=db
-    - DB_PORT=5432
-    - DB_NAME=lastcard
-    - DB_USER=brpx
     command: >
-      bash -c "/code/scripts/wait-for.sh db 5432 120 10
-      && ./manage.py migrate
+      bash -c "./manage.py migrate
       && python manage.py runserver 0.0.0.0:8000"
-  db:
-    image: postgres:9.6.8-alpine
-    restart: always
-    environment:
-    - POSTGRES_USER=brpx
-    - POSTGRES_PASSWORD=password
-    - POSTGRES_DB=lastcard
-    ports:
-    - "5432:5432"
