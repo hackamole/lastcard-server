@@ -36,6 +36,9 @@ class UserAdmin(admin.ModelAdmin):
     fields = ('email', 'password', 'address', 'country', 'birthday', 'company', 'role', 'mobile', 'url', 'social_profile')
     pass
 
+class CardUserAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Card, CardAdmin)
+admin.site.register(CardUser, CardUserAdmin)

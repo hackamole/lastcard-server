@@ -42,8 +42,8 @@ class CardViewSet(viewsets.ReadOnlyModelViewSet):
         card = self.get_object()
         current_user = request.user
         if request.user.is_authenticated:
-            card_user_event = CardUser.objects.filter(card=card, user=current_user).order_by("-created_at").first() # get last
-            card_users = User.objects.filter(carduser__id__gte=card_user_event.id)
+            card_user_event = CardUser.objects.filter(card=card, user=current_user).order_by("-created_at").last() # get last
+            card_users = User.objects.filter(carduser__id__gte=card_user_event.id, carduser__card_id=card_user_event.card_id)
         else:
             card_users = User.objects.filter(carduser__card_id=card.id).order_by("-carduser__created_at")[:1]
 
