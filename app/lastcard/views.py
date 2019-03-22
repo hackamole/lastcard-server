@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from lastcard.models import User, Card, CardUser
 from rest_framework import routers, serializers, viewsets, status
 from rest_framework.decorators import action
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .auth import CsrfExemptSessionAuthentication
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -48,3 +51,16 @@ class CardViewSet(viewsets.ReadOnlyModelViewSet):
         card_data = serializer.data
         card_data["users"] = UserSerializer(card_users, many=True).data
         return Response(card_data)
+
+    @action(methods=['post'], detail=True, permission_classes=[IsAuthenticated], authentication_classes=[CsrfExemptSessionAuthentication, TokenAuthentication])
+    def takeover(self, request, pk=None):
+        card = self.get_object()
+        current_user = request.user
+
+        card.current_user = current_user
+        card.save()
+
+        card_user = CardUser(card_id=card.id, user=current_user)
+        card_user.save()
+
+        return Response(status=status.HTTP_201_CREATED)
