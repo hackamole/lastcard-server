@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+from corsheaders.defaults import default_headers
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -164,8 +164,8 @@ CSRF_TRUSTED_ORIGINS = (
     'change.allowed.com',
 )
 
-CORS_ALLOW_HEADERS = (
-    'Authorization',
+CORS_ALLOW_HEADERS = default_headers + (
+    'Access-Control-Allow-Origin',
 )
 
 REST_FRAMEWORK = {
