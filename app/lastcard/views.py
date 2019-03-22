@@ -44,8 +44,7 @@ class CardViewSet(viewsets.ReadOnlyModelViewSet):
         else:
             card_users = User.objects.filter(carduser__card_id=card.id).order_by("-carduser__created_at")[:1]
 
-        serializer = CardsSerializer(data=card)
-        serializer.is_valid()
+        serializer = CardSerializer(card)
         card_data = serializer.data
         card_data["users"] = UserSerializer(card_users, many=True).data
         return Response(card_data)
