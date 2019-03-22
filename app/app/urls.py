@@ -26,5 +26,10 @@ router.register(r'cards', CardViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^', include(router.urls)),
 ]
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
