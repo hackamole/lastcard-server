@@ -1,5 +1,9 @@
 from django.contrib import admin
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
 from .models import Card, User, CardUser
+from .qrcode import generate as generate_qrcode
 
 class CardAdmin(admin.ModelAdmin):
     # TODO generate n cards
@@ -22,10 +26,11 @@ class CardAdmin(admin.ModelAdmin):
                 card_user = CardUser(card_id=obj.id, user=obj.current_user)
                 card_user.save()
         return super(CardAdmin, self).response_change(request, obj)
+    
 
-    def save_model(self, request, obj, form, change):
-        return super(CardAdmin, self).save_model(request, obj, form, change)
-
+@receiver(post_save, sender=Card, dispatch_uid="create_qrcode")
+def create_qrcode(sender, instance, **kwargs):
+    generate_qrcode(settings.DEFAULT_HOST, settings.QRCODE_IMAGES_PATH, str(instance.id))
 
 class UserAdmin(admin.ModelAdmin):
     fields = ('email', 'password', 'address', 'country', 'birthday', 'company', 'role', 'mobile', 'url', 'social_profile')
