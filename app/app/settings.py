@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.postgres',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -141,13 +141,27 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 QRCODE_IMAGES_PATH = os.path.join(STATIC_ROOT, 'qrcodes')
 DEFAULT_HOST = 'https://last-card.migcarva.now.sh'
 
-CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "127.0.0.1:8000").split(",")
+CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "127.0.0.1:8000,localhost:3000,last-card.migcarva.now.sh,35.243.180.216").split(",")
 
 CORS_ORIGIN_ALLOW_ALL = DEBUG
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = (
+    'DELETE',
     'GET',
     'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ORIGIN_WHITELIST = (
+    'last-card.migcarva.now.sh',
+    'change.allowed.com',
+)
+
+CSRF_TRUSTED_ORIGINS = (
+    'change.allowed.com',
 )
 
 CORS_ALLOW_HEADERS = (
@@ -156,7 +170,7 @@ CORS_ALLOW_HEADERS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',        
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
     'PAGE_SIZE': 10
