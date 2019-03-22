@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'rest_framework',
     'lastcard',
 ]
@@ -76,9 +77,21 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "DISABLE_SERVER_SIDE_CURSORS": True,
+        "NAME": os.getenv("DB_NAME", "lastcard"),
+        "USER": os.getenv("DB_USER", "brpx"),
+        "PASSWORD": os.getenv("DB_PASS", "password"),
+        "HOST": os.getenv("DB_HOST", "0.0.0.0"),
+        "PORT": os.getenv("DB_PORT", "5432"),
+        "CONN_MAX_AGE": 0,
+        "OPTIONS": {
+            "keepalives_idle": 30,
+            "keepalives_interval": 5,
+            "keepalives_count": 2,
+            "sslmode": os.environ.get("DB_SSLMODE", "prefer"),
+        },
     }
 }
 
