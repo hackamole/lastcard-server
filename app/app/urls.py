@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
 from rest_framework import routers
 from lastcard.views import UserViewSet, CardViewSet
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -28,7 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^', include(router.urls)),
-]
+] + static('qrcodes', document_root=settings.QRCODE_IMAGES_PATH)
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
