@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from rest_framework import routers
-from lastcard.views import UserViewSet, CardViewSet
+from lastcard.views import UserViewSet, CardViewSet, login
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 
@@ -29,6 +29,7 @@ router.register(r'cards', CardViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'login', login),
     url(r'^', include(router.urls)),
 ] + static('qrcodes', document_root=settings.QRCODE_IMAGES_PATH)
 
