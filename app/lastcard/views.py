@@ -47,11 +47,18 @@ class CardViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CardSerializer
     permission_classes = [AllowAny]
 
+    def retrieve(self, request, *args, **kwargs):
+        card = self.get_object()
+        card.qr_code_url = urljoin('http://lastcard.sytes.net', '/'.join(['qrcodes',str(card.id)]) + '.svg')
+        serializer = self.get_serializer(card)
+        
+        return Response(serializer.data)
+
     def list(self, request):
         cards = Card.objects.all()
 
         for card in cards:
-            card.qr_code_url = urljoin(settings.DEFAULT_HOST, '/'.join(['qrcodes',str(card.id)]) + '.svg')
+            card.qr_code_url = urljoin('http://lastcard.sytes.net', '/'.join(['qrcodes',str(card.id)]) + '.svg')
 
         serializer=CardSerializer(cards, many=True)
 

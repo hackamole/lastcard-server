@@ -140,6 +140,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 QRCODE_IMAGES_PATH = os.path.join(STATIC_ROOT, 'qrcodes')
 DEFAULT_HOST = 'https://last-card.migcarva.now.sh'
+BACKEND_HOST = 'http://lastcard.sytes.net'
 
 CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST", "127.0.0.1:8000,localhost:3000,last-card.migcarva.now.sh,35.243.180.216").split(",")
 
