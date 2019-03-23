@@ -23,7 +23,7 @@ from rest_framework.response import Response
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name','last_name', 'mobile', 'email', 'birthday', 'url', 'social_profile')
+        fields = ('first_name','last_name', 'mobile', 'email', 'birthday', 'url', 'social_profile', 'company', 'role')
 
 
 class CardSerializer(serializers.ModelSerializer):
