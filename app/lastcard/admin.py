@@ -26,15 +26,27 @@ class CardAdmin(admin.ModelAdmin):
                 card_user = CardUser(card_id=obj.id, user=obj.current_user)
                 card_user.save()
         return super(CardAdmin, self).response_change(request, obj)
-    
+
 
 @receiver(post_save, sender=Card, dispatch_uid="create_qrcode")
 def create_qrcode(sender, instance, **kwargs):
     generate_qrcode(settings.DEFAULT_HOST, settings.QRCODE_IMAGES_PATH, str(instance.id))
 
+
 class UserAdmin(admin.ModelAdmin):
     fields = ('email', 'password', 'address', 'country', 'birthday', 'company', 'role', 'mobile', 'url', 'social_profile')
-    pass
+
+    def save_model(self, request, obj, form, change):
+        # Override this to set the password to the value in the field if it's
+        # changed. Ensure it's hashed.
+        if obj.pk:
+            orig_obj = User.objects.get(pk=obj.pk)
+            if obj.password != orig_obj.password:
+                obj.set_password(obj.password)
+        else:
+            obj.set_password(obj.password)
+        obj.save()
+
 
 class CardUserAdmin(admin.ModelAdmin):
     pass
